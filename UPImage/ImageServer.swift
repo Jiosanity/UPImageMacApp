@@ -48,8 +48,21 @@ class ImageServer: NSObject {
     fileprivate var secretKey: String!
     fileprivate var liveTime: Int!
     fileprivate var QNToken : String!
-    fileprivate let upManager = QNUploadManager()
+//    fileprivate let upManager = QNUploadManager()
+    
+    
+    
     fileprivate override init() {super.init()}
+    
+    lazy var upManager :QNUploadManager! = {
+        let config = QNConfiguration.build({ (builder: QNConfigurationBuilder?) in
+            builder?.setZone(QNZone.zone2());
+        })
+        
+        let manager = QNUploadManager(configuration: config);
+        
+        return manager!;
+    }()
     
 
     public func register( configDic:[String:String],liveTime:Int = 5 ){
